@@ -1,0 +1,32 @@
+[package]
+name = "moo-solver"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+name = "moo_solver"
+path = "src/lib.rs"
+
+[[bin]]
+name = "moo-solver"
+path = "src/main.rs"
+
+[dependencies]
+atty = "0.2.14"
+contracts = { path = "src/contracts" }
+derivative = "2.2.0"
+ethcontract = "0.23.2"
+primitive-types = { version = "0.12.1", features = ["serde"] }
+serde = "1.0.163"
+serde_with = "3.0.0"
+structopt = "0.3.22"
+tokio = { version = "1.28.1", features = ["macros", "rt-multi-thread", "sync", "time"] }
+tracing = "0.1.26"
+tracing-subscriber = "0.2.25"
+lazy_static = "1.4.0"
+anyhow = "1.0.71"
+web3 = "0.18"
+hex = "0.4.3"
+warp = "0.3"
