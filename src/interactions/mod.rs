@@ -23,11 +23,18 @@ impl Interaction for Box<dyn Interaction> {
     }
 }
 
-pub type EncodedInteraction = (
-    H160,           // target
-    U256,           // value
-    Bytes<Vec<u8>>, // callData
-);
+#[derive(Debug, Clone)]
+pub struct EncodedInteraction {
+    pub(crate) target: H160,
+    pub(crate) value: U256,
+    pub(crate) call_data: Bytes<Vec<u8>>,
+}
+
+// pub type EncodedInteraction = (
+//     H160,           // target
+//     U256,           // value
+//     Bytes<Vec<u8>>, // callData
+// );
 
 impl Interaction for EncodedInteraction {
     fn encode(&self) -> Vec<EncodedInteraction> {
@@ -37,7 +44,11 @@ impl Interaction for EncodedInteraction {
 
 impl Interaction for InteractionData {
     fn encode(&self) -> Vec<EncodedInteraction> {
-        vec![(self.target, self.value, Bytes(self.call_data.clone()))]
+        vec![EncodedInteraction {
+            target: self.target,
+            value: self.value,
+            call_data: Bytes(self.call_data.clone()),
+        }]
     }
 }
 

@@ -27,7 +27,11 @@ impl Interaction for MooSettlementInteraction {
             ),
             ethcontract::Bytes(self.signature.clone().0),
         );
-        let calldata = method.tx.data.expect("no calldata").0;
-        vec![(self.moo.address(), 0.into(), ethcontract::Bytes(calldata))]
+        let call_data = method.tx.data.expect("no call data").0;
+        vec![EncodedInteraction {
+            target: self.moo.address(),
+            value: 0.into(),
+            call_data: ethcontract::Bytes(call_data),
+        }]
     }
 }

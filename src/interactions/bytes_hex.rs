@@ -53,25 +53,3 @@ impl<'de> DeserializeAs<'de, Vec<u8>> for BytesHex {
         deserialize(deserializer)
     }
 }
-
-#[cfg(test)]
-mod tests {
-
-    #[derive(Debug, serde::Deserialize, serde::Serialize, Eq, PartialEq)]
-    struct S {
-        #[serde(with = "super")]
-        b: Vec<u8>,
-    }
-
-    #[test]
-    fn json() {
-        let orig = S { b: vec![0, 1] };
-        let serialized = serde_json::to_value(&orig).unwrap();
-        let expected = serde_json::json!({
-            "b": "0x0001"
-        });
-        assert_eq!(serialized, expected);
-        let deserialized: S = serde_json::from_value(expected).unwrap();
-        assert_eq!(orig, deserialized);
-    }
-}

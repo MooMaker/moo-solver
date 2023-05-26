@@ -74,17 +74,17 @@ pub async fn solve(
         }
         .encode();
 
-        let encoded = interaction.first().unwrap();
+        let encoded_interaction = interaction.first().unwrap();
 
         let approval = ApprovalModel {
             token: token_in,
-            spender: encoded.0,
+            spender: encoded_interaction.target,
             amount: amount_in,
         };
         let interaction_data = InteractionData {
-            target: encoded.0, // during hack
-            value: U256::zero(),
-            call_data: encoded.2 .0.clone(),
+            target: encoded_interaction.target,
+            value: encoded_interaction.value,
+            call_data: encoded_interaction.call_data.0.clone(),
             exec_plan: Default::default(),
             inputs: vec![TokenAmount {
                 amount: amount_in,
